@@ -34,11 +34,11 @@ dataframe.head()
 
 num_rows, num_columns = dataframe_raw.shape
 
-# Input columns (all except 'charges' which is typically the target)
+# Input columns 
 input_cols  = [col for col in dataframe_raw.columns]
 
 # Non-numeric (categorical) columns
-categorical_cols  = dataframe_raw.select_dtypes(exclude=['number']).columns.tolist()
+categorical_cols = [col for col in dataframe_raw.columns if dataframe_raw[col].dtype == 'object']
 
 output_cols  = [col for col in dataframe.columns]
 
@@ -55,7 +55,7 @@ print(f"Mean Value of Charge: {dataframe.charges.mean()}")
 
 # import matplotlib.pyplot as plt
 plt.title("Values of charge")
-sns.distplot(dataframe.charges)
+sns.displot(dataframe.charges)
 
 #####################   Prepare the dataset for training   #####################
 
@@ -70,7 +70,7 @@ def dataframe_to_arrays(dataframe):
     targets_array = dataframe1[output_cols].to_numpy()
     return inputs_array, targets_array
 
-inputs_array, targets_array = dataframe_to_arrays(dataframe)
+inputs_array, targets_array = dataframe_to_arrays(dataframe_raw)
 inputs_array, targets_array
 
 
